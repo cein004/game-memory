@@ -1,0 +1,73 @@
+body {
+    background-color: #fdf2e9;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+#game-board {
+    display: flex;
+    flex-wrap: wrap;
+    width: 620px;
+    margin: 20px auto;
+    gap: 12px;
+    justify-content: center;
+}
+
+.card {
+    width: 100px;
+    height: 140px;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    /* Уменьшаем размер иконок, чтобы они не касались краев */
+    background-size: 65%; 
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* "Рубашка" карточки */
+.card.back {
+    background-image: url('img/cardback.jpg');
+    background-size: cover;
+}
+
+/* Стили для угаданных пар: становятся полупрозрачными */
+.card.matched {
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
+}
+
+#game-btn {
+    padding: 6px 20px;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    background-color: #efefef;
+    border: 1px solid #777;
+}
+
+#win-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #944fcc;
+    color: white;
+    padding: 20px 40px;
+    font-size: 22px;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(223, 117, 255, 0.5);
+}
