@@ -8,6 +8,7 @@ $(document).ready(function() {
 
     let score = 0;
     let attempts = {};
+    let goldenCardIndex = -1;
 
     const $btn = $('#game-btn');
     const $board = $('#game-board');
@@ -22,6 +23,7 @@ $(document).ready(function() {
         
         if (!isGameRunning) {
             gameCards.sort(() => Math.random() - 0.5);
+            goldenCardIndex = Math.floor(Math.random() * gameCards.length);
         }
 
         gameCards.forEach((imgName, index) => {
@@ -29,6 +31,9 @@ $(document).ready(function() {
             $card.data('img', imgName);
             $card.data('index', index);
             
+            if (index === goldenCardIndex) {
+                $card.addClass('golden');
+            }
             if (showFaceUp) {
                 $card.css('background-image', `url('img/${imgName}')`);
             } else {
@@ -77,12 +82,16 @@ $(document).ready(function() {
             if (card1.data('img') === card2.data('img')) {
                 const maxAttempts = Math.max(attempts[card1.data('index')], attempts[card2.data('index')]);
                 
-                if (maxAttempts === 1) {
-                    score += 20;
-                } else if (maxAttempts === 2) {
-                    score += 10;
-                }
+                let pointsToAdd = 0;
+                if (maxAttempts === 1) pointsToAdd = 20;
+                else if (maxAttempts === 2) pointsToAdd = 10;
 
+                if (card1.data('index') === goldenCardIndex || card2.data('index') === goldenCardIndex) {
+                    pointsToAdd *= 2;
+                    console.log("Golden bonus x2!"); 
+                }
+                
+                score += pointsToAdd;
                 $scoreValue.text(score);
 
                 card1.addClass('matched');

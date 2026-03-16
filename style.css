@@ -36,6 +36,12 @@ header {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+.card.golden:not(.back) {
+    background-color: #f5f5dc !important;
+    border: 2px solid #d4af37;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+}
+
 .card.back {
     background-image: url('img/cardback.jpg');
     background-size: cover;
