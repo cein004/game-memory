@@ -30,20 +30,17 @@ header {
     border-radius: 8px;
     border: 1px solid #ccc;
     cursor: pointer;
-    /* Уменьшаем размер иконок, чтобы они не касались краев */
     background-size: 65%; 
     background-repeat: no-repeat;
     background-position: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* "Рубашка" карточки */
 .card.back {
     background-image: url('img/cardback.jpg');
     background-size: cover;
 }
 
-/* Стили для угаданных пар: становятся полупрозрачными */
 .card.matched {
     opacity: 0.5;
     cursor: default;
