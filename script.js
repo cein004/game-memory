@@ -6,20 +6,28 @@ $(document).ready(function() {
     let isGameRunning = false;
     let canClick = true;
 
+    let score = 0;
+    let attempts = {};
+
     const $btn = $('#game-btn');
     const $board = $('#game-board');
+    const $scoreValue = $('#score-value');
 
     function initBoard(showFaceUp) {
         $board.empty();
         $('#win-message').hide();
+        score = 0;
+        $scoreValue.text(score);
+        attempts = {};
         
         if (!isGameRunning) {
             gameCards.sort(() => Math.random() - 0.5);
         }
 
-        gameCards.forEach((imgName) => {
+        gameCards.forEach((imgName, index) => {
             const $card = $('<div class="card"></div>');
             $card.data('img', imgName);
+            $card.data('index', index);
             
             if (showFaceUp) {
                 $card.css('background-image', `url('img/${imgName}')`);
@@ -54,6 +62,10 @@ $(document).ready(function() {
         if ($this.hasClass('matched') || !$this.hasClass('back')) return;
 
         const img = $this.data('img');
+        const index = $this.data('index');
+
+        attempts[index] = (attempts[index] || 0) + 1;
+
         $this.css('background-image', `url('img/${img}')`).removeClass('back');
         openedCards.push($this);
 
@@ -63,6 +75,16 @@ $(document).ready(function() {
             const card2 = openedCards[1];
 
             if (card1.data('img') === card2.data('img')) {
+                const maxAttempts = Math.max(attempts[card1.data('index')], attempts[card2.data('index')]);
+                
+                if (maxAttempts === 1) {
+                    score += 20;
+                } else if (maxAttempts === 2) {
+                    score += 10;
+                }
+
+                $scoreValue.text(score);
+
                 card1.addClass('matched');
                 card2.addClass('matched');
                 matchedPairs++;
@@ -70,7 +92,7 @@ $(document).ready(function() {
                 canClick = true;
 
                 if (matchedPairs === images.length) {
-                    $('#win-message').fadeIn();
+                    $('#win-message').text(`Вы выиграли! Очки: ${score}`).fadeIn();
                     $btn.text('START');
                     isGameRunning = false;
                 }
@@ -85,3 +107,6 @@ $(document).ready(function() {
         }
     });
 });
+
+
+///подсчет очков на за угадывание 20-10-0; 2. добавить золотую карточку удваивающую очки
